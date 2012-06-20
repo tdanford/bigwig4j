@@ -1,4 +1,4 @@
-package bigwig;
+package bigwig.io;
 
 import java.io.EOFException;
 import java.io.FilterInputStream;

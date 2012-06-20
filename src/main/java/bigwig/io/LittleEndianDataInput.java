@@ -1,4 +1,4 @@
-package bigwig;
+package bigwig.io;
 
 import java.io.DataInput;
 import java.io.IOException;

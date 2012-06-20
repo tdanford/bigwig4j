@@ -1,8 +1,9 @@
-package bigwig;
+package bigwig.io;
 
 import java.util.*;
 import java.io.*;
 import java.nio.charset.Charset;
+
 
 public class DeflateTest {
 	
