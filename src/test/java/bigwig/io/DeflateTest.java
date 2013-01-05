@@ -4,11 +4,27 @@ import java.util.*;
 import java.io.*;
 import java.nio.charset.Charset;
 
+import static org.testng.Assert.*;
+import org.testng.annotations.*;
 
 public class DeflateTest {
 	
-	public static void main(String[] args) throws IOException { 
-		test("FLOO BAR BLAHA #$@#$^^#$%FLOO BAR BLAHA #$@#$^^#$%FLOO BAR BLAHA #$@#$^^#$%FLOO BAR BLAHA #$@#$^^#$%");
+	private String value = null;
+	
+	@BeforeClass
+	public void loadString() throws IOException { 
+		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("data/test-compress-1.txt");
+		StringBuilder sb = new StringBuilder();
+		Reader r = new InputStreamReader(is, "UTF-8");
+		char[] buffer = new char[255];
+		int read = -1;
+		while((read = r.read(buffer)) != -1) { 
+			for(int i = 0; i < read; i++) { 
+				sb.append(buffer[i]);
+			}
+		}
+		value = sb.toString();
+		r.close();
 	}
 	
 	public static void printBytes(byte[] bs, int len) { 
@@ -18,7 +34,8 @@ public class DeflateTest {
 		System.out.println();
 	}
 
-	public static void test(String value) throws IOException { 
+	@Test(groups={ "functional" })
+	public void testDeflate() throws IOException { 
 		System.out.println(String.format("Original: %d bytes", value.getBytes(Charset.defaultCharset()).length));
 		
 		ByteArrayOutputStream outs = new ByteArrayOutputStream();
@@ -36,7 +53,7 @@ public class DeflateTest {
 		
 		try {
 			String circle = br.readLine();
-			System.out.println(String.format("\"%s\" -> \n\"%s\"", value, circle));
+			//System.out.println(String.format("\"%s\" -> \n\"%s\"", value, circle));
 			
 		} catch (IOException e) {
 			e.printStackTrace(System.err);
