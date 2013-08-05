@@ -773,8 +773,12 @@ public class Bigwig {
     
     public RTreeIndexHeader indexHeader;
 
-    public Bigwig(String filename) throws IOException { 
-        file = new RandomAccessFile(filename, "r"); 
+    public Bigwig(String filename) throws IOException {
+        this(new File(filename));
+    }
+
+    public Bigwig(File f) throws IOException {
+        file = new RandomAccessFile(f.getAbsolutePath(), "r");
         header = new Header();
         
         printObject("Header", header);
